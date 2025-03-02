@@ -1,4 +1,6 @@
-﻿cd C:\GithubProject\mes-module
+﻿#### FRONT END #########
+
+cd C:\GithubProject\mes-module
 
 # RUN AS ADMIN
 Set-ExecutionPolicy RemoteSigned -Scope Process
@@ -18,3 +20,11 @@ npm install
 npm install -D tailwindcss @tailwindcss/vite @tailwindcss/cli
 #npm install -D tailwindcss @tailwindcss/postcss postcss
 #npx tailwindcss init -p
+
+
+#### BACK END #########
+cd C:\GithubProject\mes-module
+mkdir mes-backend
+cd mes-backend
+npm init -y
+npm install express body-parser cors pg
