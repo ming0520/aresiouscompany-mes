@@ -14,6 +14,7 @@ Set-ExecutionPolicy RemoteSigned
 #https://vueschool.io/articles/vuejs-tutorials/master-tailwindcss-4-for-vue/
 #https://flowbite.com/docs/getting-started/vue/
 #https://v2.tailwindcss.com/docs/guides/vue-3-vite
+#https://reintech.io/blog/using-the-vuejs-cli-to-generate-components
 npm create vite@latest mes-frontend -- --template vue
 cd mes-frontend
 npm install
@@ -21,6 +22,11 @@ npm install -D tailwindcss @tailwindcss/vite @tailwindcss/cli
 #npm install -D tailwindcss @tailwindcss/postcss postcss
 #npx tailwindcss init -p
 
+
+## https://medevel.com/22-vue-dashboards/
+#USE THIS: https://github.com/epicmaxco/vuestic-admin
+#https://github.com/iqonicdesignofficial/hope-ui-vue-dashboard?tab=readme-ov-file#method-2-using-npm
+#https://github.com/creativetimofficial/vue-notus
 
 #### BACK END #########
 cd C:\GithubProject\mes-module
