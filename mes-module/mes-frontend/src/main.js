@@ -18,7 +18,7 @@ import Auth from "@/layouts/Auth.vue";
 // views for Admin layout
 
 import Dashboard from "@/views/admin/Dashboard.vue";
-import Settings from "@/views/admin/Settings.vue";
+import OrderManagement from "@/views/admin/OrderManagement.vue";
 import Tables from "@/views/admin/Tables.vue";
 import Maps from "@/views/admin/Maps.vue";
 
@@ -45,8 +45,8 @@ const routes = [
         component: Dashboard,
       },
       {
-        path: "/admin/settings",
-        component: Settings,
+        path: "/admin/order-management",
+        component: OrderManagement,
       },
       {
         path: "/admin/tables",

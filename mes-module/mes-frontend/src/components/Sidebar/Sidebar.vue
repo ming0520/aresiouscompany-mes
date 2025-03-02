@@ -18,7 +18,7 @@
         class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
         to="/"
       >
-        Vue Notus
+        MES Dashboard
       </router-link>
       <!-- User -->
       <ul class="md:hidden items-center flex flex-wrap list-none">
@@ -44,7 +44,7 @@
                 class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
                 to="/"
               >
-                Vue Notus
+                MES Dashboard
               </router-link>
             </div>
             <div class="w-6/12 flex justify-end">
@@ -106,7 +106,7 @@
 
           <li class="items-center">
             <router-link
-              to="/admin/settings"
+              to="/admin/order-management"
               v-slot="{ href, navigate, isActive }"
             >
               <a
@@ -123,7 +123,7 @@
                   class="fas fa-tools mr-2 text-sm"
                   :class="[isActive ? 'opacity-75' : 'text-blueGray-300']"
                 ></i>
-                Settings
+                Order Management
               </a>
             </router-link>
           </li>
@@ -147,7 +147,7 @@
                   class="fas fa-table mr-2 text-sm"
                   :class="[isActive ? 'opacity-75' : 'text-blueGray-300']"
                 ></i>
-                Tables
+                Inspection Status
               </a>
             </router-link>
           </li>
