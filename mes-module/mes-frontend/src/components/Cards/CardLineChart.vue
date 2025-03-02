@@ -22,38 +22,47 @@
     </div>
   </div>
 </template>
+
 <script>
-import Chart from "chart.js";
+import Chart from 'chart.js';
+import axios from 'axios';
 
 export default {
-  mounted: function () {
-    this.$nextTick(function () {
-      var config = {
-        type: "line",
+  data() {
+    return {
+      chartData: null,
+    };
+  },
+  async mounted() {
+    await this.fetchData();
+    this.renderChart();
+  },
+  methods: {
+    async fetchData() {
+      try {
+        const response = await axios.get('http://localhost:3001/production/orders/value-by-month-year');
+        this.chartData = response.data;
+      } catch (error) {
+        console.error('Error fetching data', error);
+      }
+    },
+    renderChart() {
+      if (!this.chartData) return;
+
+      const labels = this.chartData.map(item => item.month_year);
+      const data = this.chartData.map(item => parseFloat(item.total_order_value));
+
+      const config = {
+        type: 'line',
         data: {
-          labels: [
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-          ],
+          labels,
           datasets: [
             {
-              label: new Date().getFullYear(),
-              backgroundColor: "#4c51bf",
-              borderColor: "#4c51bf",
-              data: [65, 78, 66, 44, 56, 67, 75],
+              label: 'Total Order Value',
+              backgroundColor: '#4c51bf',
+              borderColor: '#4c51bf',
+              data,
               fill: false,
-            },
-            {
-              label: new Date().getFullYear() - 1,
-              fill: false,
-              backgroundColor: "#fff",
-              borderColor: "#fff",
-              data: [40, 68, 86, 74, 56, 60, 87],
             },
           ],
         },
@@ -62,42 +71,42 @@ export default {
           responsive: true,
           title: {
             display: false,
-            text: "Sales Charts",
-            fontColor: "white",
+            text: 'Sales Charts',
+            fontColor: 'white',
           },
           legend: {
             labels: {
-              fontColor: "white",
+              fontColor: 'white',
             },
-            align: "end",
-            position: "bottom",
+            align: 'end',
+            position: 'bottom',
           },
           tooltips: {
-            mode: "index",
+            mode: 'index',
             intersect: false,
           },
           hover: {
-            mode: "nearest",
+            mode: 'nearest',
             intersect: true,
           },
           scales: {
             xAxes: [
               {
                 ticks: {
-                  fontColor: "rgba(255,255,255,.7)",
+                  fontColor: 'rgba(255,255,255,.7)',
                 },
                 display: true,
                 scaleLabel: {
                   display: false,
-                  labelString: "Month",
-                  fontColor: "white",
+                  labelString: 'Month',
+                  fontColor: 'white',
                 },
                 gridLines: {
                   display: false,
                   borderDash: [2],
                   borderDashOffset: [2],
-                  color: "rgba(33, 37, 41, 0.3)",
-                  zeroLineColor: "rgba(0, 0, 0, 0)",
+                  color: 'rgba(33, 37, 41, 0.3)',
+                  zeroLineColor: 'rgba(0, 0, 0, 0)',
                   zeroLineBorderDash: [2],
                   zeroLineBorderDashOffset: [2],
                 },
@@ -106,20 +115,20 @@ export default {
             yAxes: [
               {
                 ticks: {
-                  fontColor: "rgba(255,255,255,.7)",
+                  fontColor: 'rgba(255,255,255,.7)',
                 },
                 display: true,
                 scaleLabel: {
                   display: false,
-                  labelString: "Value",
-                  fontColor: "white",
+                  labelString: 'Value',
+                  fontColor: 'white',
                 },
                 gridLines: {
                   borderDash: [3],
                   borderDashOffset: [3],
                   drawBorder: false,
-                  color: "rgba(255, 255, 255, 0.15)",
-                  zeroLineColor: "rgba(33, 37, 41, 0)",
+                  color: 'rgba(255, 255, 255, 0.15)',
+                  zeroLineColor: 'rgba(33, 37, 41, 0)',
                   zeroLineBorderDash: [2],
                   zeroLineBorderDashOffset: [2],
                 },
@@ -128,9 +137,9 @@ export default {
           },
         },
       };
-      var ctx = document.getElementById("line-chart").getContext("2d");
-      window.myLine = new Chart(ctx, config);
-    });
+      const ctx = document.getElementById('line-chart').getContext('2d');
+      new Chart(ctx, config);
+    },
   },
 };
 </script>
