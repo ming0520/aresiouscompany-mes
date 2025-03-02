@@ -99,6 +99,13 @@ await pool.query('DELETE FROM production_orders WHERE id = $1', [id]);
 res.json({ message: 'Order deleted' });
 });
 
+
+// Get all quality inspections for a specific order
+app.get('/quality/inspections/', async (req, res) => {
+  const result = await pool.query('SELECT * FROM quality_inspections',);
+  res.json(result.rows);
+  });
+
 // Get all quality inspections for a specific order
 app.get('/quality/inspections/:orderId', async (req, res) => {
 const { orderId } = req.params;
@@ -183,6 +190,25 @@ app.post('/production/steps', async (req, res) => {
   );
   res.json(result.rows[0]);
 });
+
+// Count production steps grouped by status
+app.get('/production/steps/grouped-by-status', async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT 
+        status,
+        COUNT(*) AS step_count
+      FROM production_steps
+      GROUP BY status
+      ORDER BY status
+    `);
+    res.json(result.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 
 // Update a production step
 app.put('/production/steps/:id', async (req, res) => {

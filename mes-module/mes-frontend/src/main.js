@@ -31,10 +31,9 @@ import Register from "@/views/auth/Register.vue";
 
 import Landing from "@/views/Landing.vue";
 import Profile from "@/views/Profile.vue";
-import Index from "@/views/Index.vue";
+// import Index from "@/views/Index.vue";
 
 // routes
-
 const routes = [
   {
     path: "/admin",
@@ -84,9 +83,9 @@ const routes = [
   },
   {
     path: "/",
-    component: Index,
+    redirect: "/admin/dashboard"
   },
-  { path: "/:pathMatch(.*)*", redirect: "/" },
+  { path: "/:pathMatch(.*)*", redirect: "/admin/dashboard" },
 ];
 
 const router = createRouter({
