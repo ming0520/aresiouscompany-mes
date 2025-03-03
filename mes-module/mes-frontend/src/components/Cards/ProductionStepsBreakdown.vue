@@ -6,7 +6,7 @@
       <div class="flex flex-wrap items-center">
         <div class="relative w-full px-4 max-w-full flex-grow flex-1">
           <h3 class="font-semibold text-base text-blueGray-700">
-            Production Steps
+            Production orders status
           </h3>
         </div>
         <div
@@ -21,8 +21,8 @@
         </div>
       </div>
     </div>
-    <div class="block w-full overflow-x-auto">My account
-      <!-- Production Steps table -->
+    <div class="block w-full overflow-x-auto">
+      <!-- Production orders table -->
       <table class="items-center w-full bg-transparent border-collapse">
         <thead class="thead-light">
           <tr>
@@ -39,7 +39,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="step in steps" :key="step.status">
+          <tr v-for="step in orders" :key="step.status">
             <th
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left"
             >
@@ -48,7 +48,7 @@
             <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
             >
-              {{ step.step_count }}
+              {{ step.order_count }}
             </td>
           </tr>
         </tbody>
@@ -63,19 +63,19 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      steps: [],
+      orders: [],
     };
   },
   async mounted() {
-    await this.fetchSteps();
+    await this.fetchOrdersGroupByStatus();
   },
   methods: {
-    async fetchSteps() {
+    async fetchOrdersGroupByStatus() {
       try {
-        const response = await axios.get('http://localhost:3001/production/steps/grouped-by-status');
-        this.steps = response.data;
+        const response = await axios.get('http://localhost:3001/production/orders/grouped-by-status');
+        this.orders = response.data;
       } catch (error) {
-        console.error('Error fetching production steps', error);
+        console.error('Error fetching production orders', error);
       }
     },
   },

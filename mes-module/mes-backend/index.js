@@ -27,11 +27,29 @@ app.get('/production/orders', async (req, res) => {
   app.post('/production/orders', async (req, res) => {
     const { order_number, product_name, quantity, start_date, due_date, status, order_value} = req.body;
     const result = await pool.query(
-      'INSERT INTO production_orders (order_number, product_name, quantity, start_date, due_date, status, order_value) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+      'INSERT INTO production_orders (order_number, product_name, quantity, start_date, due_date, status, order_value) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
       [order_number, product_name, quantity, start_date, due_date, status, order_value]
     );
     res.json(result.rows[0]);
   });
+
+// Count production orders grouped by status
+app.get('/production/orders/grouped-by-status', async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT 
+        status,
+        COUNT(*) AS order_count
+      FROM production_orders
+      GROUP BY status
+      ORDER BY status
+    `);
+    res.json(result.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
   
 // Get production orders grouped by month-year
 app.get('/production/orders/grouped-by-month-year', async (req, res) => {

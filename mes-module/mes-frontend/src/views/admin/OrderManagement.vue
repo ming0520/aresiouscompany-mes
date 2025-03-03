@@ -1,21 +1,24 @@
 <template>
   <div class="flex flex-wrap">
     <div class="w-full lg:w-8/12 px-4">
-      <OrderForms />
+      <ProductionOrdersTable/>
     </div>
     <div class="w-full lg:w-4/12 px-4">
-      <CardProfile />
+      <!-- <CardProfile /> -->
+      <OrderForms />
     </div>
   </div>
 </template>
 <script>
 import OrderForms from "@/components/Cards/OrderForms.vue";
-import CardProfile from "@/components/Cards/CardProfile.vue";
+import ProductionOrdersTable from "../../components/Cards/ProductionOrdersTable.vue";
+// import CardProfile from "@/components/Cards/CardProfile.vue";
 
 export default {
   components: {
     OrderForms,
-    CardProfile,
+    ProductionOrdersTable,
+    // CardProfile,
   },
 };
 </script>
