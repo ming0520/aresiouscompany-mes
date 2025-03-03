@@ -42,7 +42,7 @@ cd ../mes-backend && npm install
 
 1. Create a PostgreSQL database named `mes_db`.
 2. Update the database connection settings in `mes-backend/config/database.js` or use environment variables.
-3. Run migrations (if applicable) using a tool like Knex or Sequelize.
+3. Run migrations by using SQL file in mes-module\mes-backend\SETUP_DATABASE.sql (if applicable) using a tool like Knex or Sequelize.
 
 ### 4. Start the Servers
 
