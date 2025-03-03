@@ -88,7 +88,7 @@
     </td>
     <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
       <button
-        class="bg-green-500 text-white px-4 py-2 rounded shadow hover:shadow-md text-xs"
+        class="bg-yellow-500 text-white font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md"
         @click="$emit('order-selected', order)"
       >
         Select
