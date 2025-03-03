@@ -2,6 +2,15 @@
 
 A Manufacturing Execution System (MES) for managing production orders, quality inspections, machine utilization, and production steps.
 
+## Dashboard Screenshots
+![Dashboard](./Dashboard.png)
+
+### Order Management
+![Order Management](./OrderManagement.png)
+
+### Inspection Status Dashboard
+![Inspection Status](./InspectionStatus.png)
+
 ## Prerequisites
 
 Ensure you have the following installed on your system:
@@ -10,7 +19,6 @@ Ensure you have the following installed on your system:
 - **npm** (comes with Node.js)
 - **Docker** (optional, for containerized deployment)
 
----
 
 ## Steps to Run the Project
 
