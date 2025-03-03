@@ -100,15 +100,31 @@ app.get('/production/orders/pending-sum', async (req, res) => {
 
 
 // Update a production order
-app.put('/production/orders/:id', async (req, res) => {
-const { id } = req.params;
-const { status } = req.body;
-const result = await pool.query(
-    'UPDATE production_orders SET status = $1 WHERE id = $2 RETURNING *',
-    [status, id]
-);
-res.json(result.rows[0]);
+app.put('/production/orders/:order_number', async (req, res) => {
+  const { order_number } = req.params;
+  const { product_name, quantity, start_date, due_date, status, order_value } = req.body;
+
+  try {
+    const result = await pool.query(
+      `UPDATE production_orders 
+      SET product_name = $1, quantity = $2, start_date = $3, 
+          due_date = $4, status = $5, order_value = $6 
+      WHERE order_number = $7 RETURNING *`,
+      [product_name, quantity, start_date, due_date, status, order_value, order_number]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error("Error updating order:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
+
+
 
 // Delete a production order
 app.delete('/production/orders/:id', async (req, res) => {

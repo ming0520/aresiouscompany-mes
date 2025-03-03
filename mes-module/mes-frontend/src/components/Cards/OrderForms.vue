@@ -6,27 +6,11 @@
         <div class="text-center flex justify-between">
           <h6 class="text-blueGray-700 text-xl font-bold">Create Production Order</h6>
           <button
-            v-if="selectedOrder"
             class="bg-yellow-500 text-white font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md"
             type="button"
-            @click="updateOrder"
+            @click="saveOrUpdateOrder"
           >
-            Update Order
-          </button>
-          <button
-            v-else
-            class="bg-emerald-500 text-white font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md"
-            type="button"
-            @click="createOrder"
-          >
-            Save Order
-          </button>
-          <button
-            class="bg-blue-500 text-white font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md"
-            type="button"
-            @click="refreshPage"
-          >
-            Refresh
+            {{ selectedOrder ? "Update Order" : "Save Order" }}
           </button>
         </div>
       </div>
@@ -42,13 +26,13 @@
                 <input
                   v-if="field.type !== 'select'"
                   :type="field.type"
-                  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow"
+                  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow w-full"
                   v-model="order[field.model]"
                   :id="field.id"
                 />
                 <select
                   v-else
-                  class="border-0 px-3 py-3 bg-white rounded text-sm shadow"
+                  class="border-0 px-3 py-3 bg-white rounded text-sm shadow w-full"
                   v-model="order[field.model]"
                   :id="field.id"
                 >
@@ -65,11 +49,39 @@
 
 <script>
 export default {
+  props: {
+    selectedOrder: Object, // Receive selected order from parent
+  },
+  watch: {
+  selectedOrder: {
+    handler(newOrder) {
+      if (newOrder) {
+        this.order = { ...newOrder };
+        
+        // Ensure date values are in 'YYYY-MM-DD' format
+        if (this.order.start_date) {
+          this.order.start_date = new Date(this.order.start_date).toISOString().split('T')[0];
+        }
+        if (this.order.due_date) {
+          this.order.due_date = new Date(this.order.due_date).toISOString().split('T')[0];
+        }
+      }
+    },
+    deep: true,
+  },
+},
+
   data() {
     return {
-      order: { order_number: '', product_name: '', quantity: '', start_date: '', due_date: '', status: '', order_value: '' },
-      selectedOrder: null,
-      orders: [],
+      order: {
+        order_number: '',
+        product_name: '',
+        quantity: '',
+        start_date: '',
+        due_date: '',
+        status: '',
+        order_value: '',
+      },
       fields: [
         { id: 'order_number', label: 'Order Number', model: 'order_number', type: 'text' },
         { id: 'product_name', label: 'Product Name', model: 'product_name', type: 'text' },
@@ -87,16 +99,12 @@ export default {
       ]
     };
   },
-  mounted() {
-    this.fetchOrders();
-  },
   methods: {
-    async fetchOrders() {
-      try {
-        const response = await fetch('http://localhost:3001/production/orders');
-        this.orders = await response.json();
-      } catch (error) {
-        console.error('Error fetching orders:', error);
+    async saveOrUpdateOrder() {
+      if (this.selectedOrder) {
+        await this.updateOrder();
+      } else {
+        await this.createOrder();
       }
     },
     async createOrder() {
@@ -104,32 +112,35 @@ export default {
         await fetch('http://localhost:3001/production/orders', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(this.order)
+          body: JSON.stringify(this.order),
         });
-        this.refreshPage();
+        this.$emit('order-updated'); // Notify parent if needed
       } catch (error) {
         console.error('Error creating order:', error);
       }
     },
     async updateOrder() {
       try {
+        const formattedOrder = { ...this.order };
+
+        // Convert dates to ISO format before sending
+        if (formattedOrder.start_date) {
+          formattedOrder.start_date = new Date(formattedOrder.start_date).toISOString();
+        }
+        if (formattedOrder.due_date) {
+          formattedOrder.due_date = new Date(formattedOrder.due_date).toISOString();
+        }
+
         await fetch(`http://localhost:3001/production/orders/${this.order.order_number}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(this.order)
+          body: JSON.stringify(formattedOrder),
         });
-        this.refreshPage();
+        this.$emit('order-updated'); // Notify parent if needed
       } catch (error) {
         console.error('Error updating order:', error);
       }
     },
-    refreshPage() {
-      window.location.reload();
-    },
-    selectOrder(order) {
-      this.order = { ...order };
-      this.selectedOrder = order;
-    }
-  }
+  },
 };
 </script>

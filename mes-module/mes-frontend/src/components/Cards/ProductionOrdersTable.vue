@@ -14,7 +14,7 @@
         >
           <button
             class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-            type="button"
+            type="button" @click="$emit('refresh-page')"
           >
             Refresh
           </button>
@@ -64,44 +64,39 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="order in orders" :key="order.id">
-            <th
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left"
-            >
-              {{ order.order_number }}
-            </th>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-            >
-              {{ order.product_name }}
-            </td>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-            >
-              {{ order.quantity }}
-            </td>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-            >
-              {{ order.start_date }}
-            </td>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-            >
-              {{ order.due_date }}
-            </td>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-            >
-              {{ order.status }}
-            </td>
-            <td
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-            >
-              {{ order.order_value }}
-            </td>
-          </tr>
-        </tbody>
+  <tr v-for="order in orders" :key="order.id">
+    <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+      {{ order.order_number }}
+    </td>
+    <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+      {{ order.product_name }}
+    </td>
+    <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+      {{ order.quantity }}
+    </td>
+    <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+      {{ order.start_date }}
+    </td>
+    <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+      {{ order.due_date }}
+    </td>
+    <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+      {{ order.status }}
+    </td>
+    <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+      {{ order.order_value }}
+    </td>
+    <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+      <button
+        class="bg-green-500 text-white px-4 py-2 rounded shadow hover:shadow-md text-xs"
+        @click="$emit('order-selected', order)"
+      >
+        Select
+      </button>
+    </td>
+  </tr>
+</tbody>
+
       </table>
     </div>
   </div>
