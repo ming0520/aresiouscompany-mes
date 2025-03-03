@@ -161,6 +161,45 @@ aresiouscompany-mes/
 
 ---
 
+# Order Statuses in Supply Chain
+
+## Order Placed
+The initial stage where the customer has placed an order.
+
+## Order Confirmed
+The order has been confirmed by the supplier or manufacturer.
+
+## Order Processed
+The order is being processed and prepared for shipment.
+
+## Order Picked
+Items for the order have been picked from inventory.
+
+## Order Packed
+The order items have been packed and are ready for shipment.
+
+## Order Dispatched
+The order has been dispatched from the warehouse or fulfillment center.
+
+## In Transit
+The order is in transit and on its way to the delivery destination.
+
+## Out for Delivery
+The order is out for delivery and will reach the customer soon.
+
+## Delivered
+The order has been successfully delivered to the customer.
+
+## Order Returned
+The customer has returned the order.
+
+## Order Cancelled
+The order has been cancelled by the customer or the supplier.
+
+## Order Refunded
+The customer has been refunded for the order.
+
+
 ## Contributing
 
 Contributions are welcome! If you'd like to contribute, please follow these steps:
